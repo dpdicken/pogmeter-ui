@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+// import './App.css';
+import { Route, BrowserRouter } from 'react-router-dom';
+import SocketToComponentManager from './SocketToComponentManager';
+import ImageRain from './ImageRain';
+import PogMeter from './PogMeter';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// TODO can we read from an env variable?
+const MAX_POG_METER = 10;
+
+class App extends Component {
+
+  render() {
+    return (
+      <div className="App">
+        <BrowserRouter>
+          <Route path="/rain/:channel" render={(props) => <SocketToComponentManager {...props} 
+            components={[<ImageRain key="rain" maxPogValue={MAX_POG_METER}/>]}/>}/>
+          <Route path="/gauge/:channel" render={(props) => <SocketToComponentManager {...props} 
+            components={[<PogMeter key="meter" maxPogValue={MAX_POG_METER}/>]}/>}/>
+          <Route path="/combo/:channel" render={(props) => <SocketToComponentManager {...props} 
+            components={[
+                <ImageRain key="rain" maxPogValue={MAX_POG_METER}/>,
+                <PogMeter  key="meter" maxPogValue={MAX_POG_METER}/>
+              ]}/>}/>
+        </BrowserRouter>
+      </div>
+    );
+  }
 }
 
 export default App;
