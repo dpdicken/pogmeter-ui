@@ -66,6 +66,7 @@ class ImageRain extends Component {
 
     render() {
         var classNames = "fade-in";
+
         if (!this.state.alwaysShow && this.props.maxPogValue > this.state.sum) {
             classNames += " hide";
         }

@@ -1,5 +1,8 @@
 import { Component } from 'react';
 
+const serverUrl = "35.238.100.1";
+// const serverUrl = "localhost"
+
 class PogMeter extends Component {
 
     constructor(props) {
@@ -14,7 +17,7 @@ class PogMeter extends Component {
 
     componentDidMount() {
         var id = this.props.channelId;
-        fetch('http://localhost:80/api/create', {
+        fetch('https://' + serverUrl + '/api/create', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -39,7 +42,7 @@ class PogMeter extends Component {
     }
 
     instantiateSocket(port) {
-        var ws = new WebSocket('ws://localhost:' + port)
+        var ws = new WebSocket('wss://' + serverUrl + ":443/ws?channelId=" + this.props.channelId)
 
         ws.onopen = () => {
             this.setState({socket: ws})

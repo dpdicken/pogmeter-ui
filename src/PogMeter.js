@@ -36,9 +36,6 @@ class PogMeter extends Component {
     }
 
     capAllowableValue(val) {
-        // console.log( val > this.props.maxPogValue 
-        //     ? Math.min(MAX_ALLOWABLE_OVERRAGE_PERCENTAGE * this.props.maxPogValue, val)
-        //     : val)
         return val > this.props.maxPogValue 
             ? Math.ceil(Math.min((1 + MAX_ALLOWABLE_OVERRAGE_PERCENTAGE) * this.props.maxPogValue, val))
             : val;
@@ -51,8 +48,16 @@ class PogMeter extends Component {
             classNames += " hide";
         }
 
+        var style = {
+            position: "absolute",
+            top: "50%",
+            left: "42%",
+            marginTop: "-50px",
+            height: "100px"
+        }
+
         return (
-            <div className={classNames}>     
+            <div className={classNames} style={style}>     
                <ReactSpeedometer
                     maxValue={this.props.maxPogValue}
                     minValue={0}
