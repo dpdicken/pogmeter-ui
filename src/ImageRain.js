@@ -4,7 +4,7 @@ import dangPogU from './resources/dangPOGU-112.png';
 import './ImageRain.css';
 import './Hide.css';
 
-const lengthOfImageSide = "40px";
+const lengthOfImageSide = "50px";
 
 class ImageRain extends Component {
 
@@ -61,7 +61,7 @@ class ImageRain extends Component {
                 toUpdate.shift();
             } 
         }
-        setTimeout(this.addImage.bind(this), 500)
+        setTimeout(this.addImage.bind(this), 400)
     }
 
     render() {

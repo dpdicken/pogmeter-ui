@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-// import './App.css';
 import { Route, BrowserRouter } from 'react-router-dom';
 import SocketToComponentManager from './SocketToComponentManager';
 import ImageRain from './ImageRain';
 import PogMeter from './PogMeter';
 
 // TODO can we read from an env variable?
-const MAX_POG_METER = 10;
+const MAX_POG_METER = 50;
 
 class App extends Component {
 

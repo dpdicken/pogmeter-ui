@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import ReactSpeedometer from "react-d3-speedometer"
 import './Hide.css';
+import './Gauge.css';
 
-const SHOW_WHEN_REACH_PERCENTAGE = 0.33;
+const SHOW_WHEN_REACH_PERCENTAGE = 0.33; 
 const MAX_ALLOWABLE_OVERRAGE_PERCENTAGE = 0.05;
 
 class PogMeter extends Component {
@@ -12,7 +13,8 @@ class PogMeter extends Component {
         this.state = {
             speedometerValue: props.meterValue,
             jitterValue: 0,
-            alwaysShow: this.props.alwaysShow
+            alwaysShow: this.props.alwaysShow,
+            negateJitter: false
         }
     }
 
@@ -29,10 +31,10 @@ class PogMeter extends Component {
 
     applyJitter() {
         const speedometerValue = this.state.speedometerValue
-        const negatePossible = Math.round(Math.random()) === 0 ? -1 : 1;
-        var jitteredSpeedometerValue = negatePossible * Math.round(speedometerValue * 0.02)
-        this.setState({jitterValue: jitteredSpeedometerValue})
-        setTimeout(this.applyJitter.bind(this), 100)
+        const negate = this.state.negateJitter;
+        var jitteredSpeedometerValue = negate * (speedometerValue / 100)  * Math.exp(speedometerValue / 100);
+        this.setState({jitterValue: jitteredSpeedometerValue, negateJitter: !negate})
+        setTimeout(this.applyJitter.bind(this), 200)
     }
 
     capAllowableValue(val) {
@@ -49,26 +51,45 @@ class PogMeter extends Component {
         }
 
         var style = {
-            position: "absolute",
-            top: "50%",
-            left: "42%",
-            marginTop: "-50px",
-            height: "100px"
+            textAlign: "center"
+        }
+        
+        var descriptionStyle = {
+            marginTop: "-120px",
+            fontFamily: 'Permanent Marker',
+            color: "red"
         }
 
         return (
-            <div className={classNames} style={style}>     
+            <div className={classNames} 
+            style={style}
+            >     
                <ReactSpeedometer
                     maxValue={this.props.maxPogValue}
                     minValue={0}
                     value={this.capAllowableValue(this.state.speedometerValue)}
+
                     needleColor="black"
-                    needleTransitionDuration={1000}
+                    needleTransitionDuration={200}
+
+                    textColor="red"
+                    paddingVertical={20}
+                    valueTextFontSize="36px"
+                    currentValueText="POG METER"
+
+                    labelFontSize="16px"
+                    paddingHorizontal={20}
+
+                    ringWidth={40}
                     startColor="green"
                     endColor="red"
-                    segments={10}
+                    segments={100}
                     maxSegmentLabels={5}
-                    />
+                    > 
+                    </ReactSpeedometer>
+
+                    <p style={descriptionStyle}># of POGs in last 5 seconds</p>
+
             </div>
         )
     }

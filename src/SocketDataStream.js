@@ -1,7 +1,7 @@
 import { Component } from 'react';
 
 const serverUrl = "35.238.100.1";
-// const serverUrl = "localhost"
+// const serverUrl = "localhost";
 
 class PogMeter extends Component {
 
