@@ -1,6 +1,6 @@
 import { Component } from 'react';
 
-const serverUrl = "35.238.100.1";
+const serverUrl = "api.pogmeter.dicken.dev";
 // const serverUrl = "localhost";
 
 class PogMeter extends Component {
@@ -38,7 +38,7 @@ class PogMeter extends Component {
                     });
             }
         })
-        .catch(this.state.callbackOnFail)
+        .catch(e => this.state.callbackOnFail(e))
     }
 
     instantiateSocket(port) {
