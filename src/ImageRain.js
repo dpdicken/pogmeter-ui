@@ -31,25 +31,27 @@ class ImageRain extends Component {
     }
 
     addImage() {
-        const imageSourceToAdd = Math.round(Math.random()) === 0 ? dangPOG : dangPogU;
-        const newImageRef = React.createRef();
-        const horizontalPercent = Math.round(Math.random() * 100);
-
-        const id = this.state.imageId;
-        this.setState({ imageId: id + 1 })
-
-        const imageToAdd = <img style={{left: horizontalPercent + "%"}}
-                                key={"img" + id}
-                                ref={newImageRef} 
-                                className="float back-and-forth" 
-                                src={imageSourceToAdd} 
-                                height={lengthOfImageSide} 
-                                width={lengthOfImageSide} 
-                                alt="POG" />
-        
         var toUpdate = this.state.images;
-        toUpdate.push(imageToAdd);
-        this.setState({images: toUpdate})
+        if (this.isActive()) {
+            const imageSourceToAdd = Math.round(Math.random()) === 0 ? dangPOG : dangPogU;
+            const newImageRef = React.createRef();
+            const horizontalPercent = Math.round(Math.random() * 100);
+    
+            const id = this.state.imageId;
+            this.setState({ imageId: id + 1 })
+    
+            const imageToAdd = <img style={{left: horizontalPercent + "%"}}
+                                    key={"img" + id}
+                                    ref={newImageRef} 
+                                    className="float back-and-forth" 
+                                    src={imageSourceToAdd} 
+                                    height={lengthOfImageSide} 
+                                    width={lengthOfImageSide} 
+                                    alt="POG" />
+
+            toUpdate.push(imageToAdd);
+            this.setState({images: toUpdate})
+        }
 
         var i;
         for (i = 0; i < toUpdate.length; i++) {
@@ -67,7 +69,7 @@ class ImageRain extends Component {
     render() {
         var classNames = "fade-in";
 
-        if (!this.state.alwaysShow && this.props.maxPogValue > this.state.sum) {
+        if (this.isNotActive()) {
             classNames += " hide";
         }
 
@@ -76,6 +78,14 @@ class ImageRain extends Component {
                 {this.state.images}
             </div>
         );
+    }
+
+    isActive() {
+        return !this.isNotActive();
+    }
+
+    isNotActive() {
+        return !this.state.alwaysShow && (this.props.maxPogValue > this.state.sum);
     }
 
 }

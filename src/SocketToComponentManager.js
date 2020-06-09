@@ -35,10 +35,7 @@ class SocketToComponentManager extends Component {
     }
 
     handleFailedToConnectToSocket(e) {
-        var newChannelId = window.alert("Failed to connect to channel '" + this.state.channel + "'. Please enter a different channel id", "Enter channel id")
-        // if (newChannelId !== null && newChannelId !== "") {
-        //     this.setState({routeTo: newChannelId})
-        // }
+        window.alert("Failed to connect to channel. Please enter a different channel id", "Enter channel id")
     }
 
     responseUpdate(response) {
